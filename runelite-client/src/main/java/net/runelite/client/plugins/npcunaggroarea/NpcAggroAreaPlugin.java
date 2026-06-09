@@ -43,6 +43,7 @@ import net.runelite.api.Constants;
 import net.runelite.api.NPC;
 import net.runelite.api.NPCComposition;
 import net.runelite.api.Perspective;
+import net.runelite.api.Player;
 import net.runelite.api.WorldView;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldArea;
@@ -258,6 +259,12 @@ public class NpcAggroAreaPlugin extends Plugin
 
 	private boolean isNpcMatch(NPC npc)
 	{
+		final Player localPlayer = client.getLocalPlayer();
+		if (localPlayer == null)
+		{
+			return false;
+		}
+
 		NPCComposition composition = npc.getTransformedComposition();
 		if (composition == null)
 		{
@@ -271,7 +278,7 @@ public class NpcAggroAreaPlugin extends Plugin
 
 		// Most NPCs stop aggroing when the player has more than double
 		// its combat level.
-		int playerLvl = client.getLocalPlayer().getCombatLevel();
+		int playerLvl = localPlayer.getCombatLevel();
 		int npcLvl = composition.getCombatLevel();
 		String npcName = composition.getName().toLowerCase();
 		if (npcLvl > 0 && playerLvl > npcLvl * 2 && !isInWilderness(npc.getWorldLocation()))
@@ -346,7 +353,13 @@ public class NpcAggroAreaPlugin extends Plugin
 	@Subscribe
 	public void onGameTick(GameTick event)
 	{
-		WorldPoint newLocation = client.getLocalPlayer().getWorldLocation();
+		final Player localPlayer = client.getLocalPlayer();
+		if (localPlayer == null || localPlayer.getWorldLocation() == null)
+		{
+			return;
+		}
+
+		WorldPoint newLocation = localPlayer.getWorldLocation();
 
 		if (active && notifyOnce && Instant.now().isAfter(endTime))
 		{
@@ -464,8 +477,13 @@ public class NpcAggroAreaPlugin extends Plugin
 		loadConfig();
 		resetConfig();
 
-		WorldPoint newLocation = client.getLocalPlayer().getWorldLocation();
-		assert newLocation != null;
+		final Player localPlayer = client.getLocalPlayer();
+		if (localPlayer == null || localPlayer.getWorldLocation() == null)
+		{
+			return;
+		}
+
+		WorldPoint newLocation = localPlayer.getWorldLocation();
 
 		// If the player isn't at the location he/she logged out at,
 		// the safe unaggro area probably changed, and should be disposed.

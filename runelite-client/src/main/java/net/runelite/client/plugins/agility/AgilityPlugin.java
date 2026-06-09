@@ -228,6 +228,12 @@ public class AgilityPlugin extends Plugin
 			return;
 		}
 
+		final Player localPlayer = client.getLocalPlayer();
+		if (localPlayer == null || localPlayer.getWorldLocation() == null)
+		{
+			return;
+		}
+
 		agilityLevel = statChanged.getBoostedLevel();
 
 		// Store previous agility level for possible goal laps recalculation
@@ -237,15 +243,15 @@ public class AgilityPlugin extends Plugin
 		int skillGained = agilityXp - lastAgilityXp;
 		lastAgilityXp = agilityXp;
 
-		log.debug("Gained {} xp at {}", skillGained, client.getLocalPlayer().getWorldLocation());
+		log.debug("Gained {} xp at {}", skillGained, localPlayer.getWorldLocation());
 
 		// Get course
-		Courses course = Courses.getCourse(client.getLocalPlayer().getWorldLocation().getRegionID());
+		Courses course = Courses.getCourse(localPlayer.getWorldLocation().getRegionID());
 		if (course == null || !config.showLapCount())
 		{
 			return;
 		}
-		else if (Arrays.stream(course.getCourseEndWorldPoints()).noneMatch(wp -> wp.equals(client.getLocalPlayer().getWorldLocation())))
+		else if (Arrays.stream(course.getCourseEndWorldPoints()).noneMatch(wp -> wp.equals(localPlayer.getWorldLocation())))
 		{
 			if (session != null && previousLevel != statChanged.getLevel())
 			{
