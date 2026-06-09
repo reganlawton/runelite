@@ -196,15 +196,54 @@ public interface NpcOverheadIndicatorConfig extends Config
 
 	@Alpha
 	@ConfigItem(
-		keyName = "comboColor",
-		name = "Combo color",
-		description = "Color used for combined protection overheads.",
+		keyName = "rangedMagicColor",
+		name = "Ranged+magic color",
+		description = "Color used for combined ranged and magic protection overheads.",
 		section = colorsSection,
 		position = 3
 	)
-	default Color comboColor()
+	default Color rangedMagicColor()
 	{
-		return new Color(26, 188, 156);
+		return new Color(232, 76, 61);
+	}
+
+	@Alpha
+	@ConfigItem(
+		keyName = "rangedMeleeColor",
+		name = "Ranged+melee color",
+		description = "Color used for combined ranged and melee protection overheads.",
+		section = colorsSection,
+		position = 4
+	)
+	default Color rangedMeleeColor()
+	{
+		return new Color(52, 152, 219);
+	}
+
+	@Alpha
+	@ConfigItem(
+		keyName = "magicMeleeColor",
+		name = "Magic+melee color",
+		description = "Color used for combined magic and melee protection overheads.",
+		section = colorsSection,
+		position = 5
+	)
+	default Color magicMeleeColor()
+	{
+		return new Color(46, 204, 113);
+	}
+
+	@Alpha
+	@ConfigItem(
+		keyName = "tripleProtectionColor",
+		name = "Triple protection color",
+		description = "Color used for combined ranged, magic, and melee protection overheads.",
+		section = colorsSection,
+		position = 6
+	)
+	default Color tripleProtectionColor()
+	{
+		return new Color(241, 196, 15);
 	}
 
 	@Alpha
@@ -213,11 +252,11 @@ public interface NpcOverheadIndicatorConfig extends Config
 		name = "Utility color",
 		description = "Color used for utility overheads such as Smite, Redemption, and Soul Split.",
 		section = colorsSection,
-		position = 4
+		position = 7
 	)
 	default Color utilityColor()
 	{
-		return new Color(241, 196, 15);
+		return new Color(243, 156, 18);
 	}
 
 	@Alpha
@@ -226,7 +265,7 @@ public interface NpcOverheadIndicatorConfig extends Config
 		name = "Other color",
 		description = "Fallback color for any unrecognized overheads.",
 		section = colorsSection,
-		position = 5
+		position = 8
 	)
 	default Color otherColor()
 	{

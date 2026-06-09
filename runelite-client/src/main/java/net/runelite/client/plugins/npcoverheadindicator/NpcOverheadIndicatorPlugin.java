@@ -333,10 +333,13 @@ public class NpcOverheadIndicatorPlugin extends Plugin
 			case 14:
 				return config.magicColor();
 			case 6:
+				return config.rangedMagicColor();
 			case 7:
+				return config.rangedMeleeColor();
 			case 8:
+				return config.magicMeleeColor();
 			case 9:
-				return config.comboColor();
+				return config.tripleProtectionColor();
 			case 3:
 			case 4:
 			case 5:
